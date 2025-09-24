@@ -421,7 +421,7 @@ async fn main() -> Result<()> {
     }
 
     // Give a moment for the beep to finish before starting recording (beep is now 500ms)
-    tokio::time::sleep(tokio::time::Duration::from_millis(600)).await;
+    // tokio::time::sleep(tokio::time::Duration::from_millis(200)).await;
 
     // Start recording immediately
     if let Err(e) = recorder.start_recording() {
@@ -433,7 +433,7 @@ async fn main() -> Result<()> {
     eprintln!("Audio recording started successfully!");
 
     // Give PipeWire a moment to start capturing
-    tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
+    // tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
 
     eprintln!("Ready. Send SIGUSR1 to transcribe and output to stdout.");
 
