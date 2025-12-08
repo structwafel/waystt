@@ -7,7 +7,7 @@ license = "GPL-3.0-or-later"
 authors = ["Artur Roszczyk <artur.roszczyk@gmail.com>"]
 
 [features]
-default = []
+default = ["vulkan"]
 # GPU acceleration (works on AMD and NVIDIA GPUs via Vulkan)
 vulkan = ["whisper-rs/vulkan"]
 
