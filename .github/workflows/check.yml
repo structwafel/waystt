@@ -41,11 +41,11 @@ jobs:
     - name: Check formatting
       run: cargo fmt --all -- --check
 
-    - name: Check compilation (CPU-only, Vulkan tested in release)
-      run: cargo check --all-targets --no-default-features
+    - name: Check compilation
+      run: cargo check --all-targets
 
     - name: Clippy linting
-      run: cargo clippy --all-targets --no-default-features -- -D warnings -W clippy::pedantic
+      run: cargo clippy --all-targets -- -D warnings -W clippy::pedantic
 
     - name: Check for unused dependencies
       run: |
