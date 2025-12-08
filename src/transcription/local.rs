@@ -23,9 +23,31 @@ impl LocalWhisperProvider {
         })?;
 
         let mut params = WhisperContextParameters::default();
-        params.use_gpu(config.whisper_use_gpu);
-        if config.whisper_use_gpu {
-            params.gpu_device(config.whisper_gpu_device);
+
+        // Configure GPU backend based on WHISPER_BACKEND env var
+        match config.whisper_backend.as_str() {
+            "vulkan" => {
+                #[cfg(feature = "vulkan")]
+                {
+                    params.use_gpu(true);
+                    params.gpu_device(config.whisper_gpu_device);
+                }
+                #[cfg(not(feature = "vulkan"))]
+                {
+                    return Err(TranscriptionError::ConfigurationError(
+                        "Vulkan support not compiled. Rebuild with --features vulkan".to_string(),
+                    ));
+                }
+            }
+            "cpu" => {
+                params.use_gpu(false);
+            }
+            _ => {
+                return Err(TranscriptionError::ConfigurationError(format!(
+                    "Invalid WHISPER_BACKEND: '{}'. Valid options: cpu, vulkan",
+                    config.whisper_backend
+                )));
+            }
         }
 
         let ctx = WhisperContext::new_with_params(model_str, params).map_err(|e| {

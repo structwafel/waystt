@@ -8,7 +8,7 @@ authors = ["Artur Roszczyk <artur.roszczyk@gmail.com>"]
 
 [features]
 default = []
-# GPU acceleration features (choose one)
+# GPU acceleration (works on AMD and NVIDIA GPUs via Vulkan)
 vulkan = ["whisper-rs/vulkan"]
 
 [dependencies]
@@ -59,6 +59,7 @@ tokio-test = "0.4"
 [[bin]]
 name = "waystt"
 path = "src/main.rs"
+required-features = []
 
 [profile.release]
 opt-level = 3
