@@ -47,8 +47,9 @@ COPY . .
 #    'cargo clean' ensures no stale artifacts from previous builds (if mounting cache).
 RUN echo "=== Starting Vulkan Build ===" && \
     cargo clean && \
-    cargo build --release --features vulkan
+    cargo build --release --features vulkan && \
+    strip target/release/waystt
 
-# 7. Default command: Copy the binary to a mounted volume
+# 7. Default command: Copy the stripped binary to a mounted volume
 #    This allows the user to run: docker run -v $(pwd):/out waystt-builder
 CMD ["cp", "target/release/waystt", "/out/waystt-vulkan"]

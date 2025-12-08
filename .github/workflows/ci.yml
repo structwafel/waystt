@@ -88,7 +88,6 @@ jobs:
       run: |
         docker build -f Dockerfile.build-vulkan -t waystt-builder .
         docker run --rm -v $(pwd):/out waystt-builder
-        strip waystt-vulkan
         mv waystt-vulkan waystt-linux-x86_64
 
     - name: Upload binary artifact
