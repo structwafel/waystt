@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- GPU acceleration for local Whisper transcription via Vulkan (AMD/NVIDIA)
+  - Build with `--features vulkan`; defaults to GPU when compiled with the feature
+  - Override with `WHISPER_BACKEND` (`cpu`/`vulkan`) and `WHISPER_GPU_DEVICE`
+
+### Changed
+- Fast startup is now the default (~100ms instead of ~1600ms)
+  - Recording starts immediately with asynchronous beep playback
+  - Any captured startup beep is automatically trimmed during processing
+  - No flag required
+
 ## [0.3.1] - 2025-10-06
 ### Changed
 - Updated project dependencies to the latest compatible releases.

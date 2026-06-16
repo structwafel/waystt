@@ -164,6 +164,12 @@ binds {
 
 waystt starts on-demand, records audio, transcribes it, outputs to stdout, then exits:
 
+### Startup
+
+waystt uses fast startup by default (~100ms): it begins recording immediately and plays
+the start beep asynchronously. Any portion of the beep captured at the start of the buffer
+is automatically trimmed during processing, so it doesn't affect transcription.
+
 ### Basic Usage (stdout)
 
 ```bash

@@ -58,15 +58,20 @@ impl App {
         eprintln!("waystt - Wayland Speech-to-Text Tool");
         eprintln!("Starting audio recording...");
 
-        if let Err(e) = self.beeps.play_async(BeepType::RecordingStart).await {
-            eprintln!("Warning: Failed to play recording start beep: {e}");
-        }
-        tokio::time::sleep(tokio::time::Duration::from_millis(600)).await;
+        // Fast startup: play the beep asynchronously and start recording immediately, with
+        // no blocking delays. The beep may be briefly captured but is trimmed during processing.
+        let beeps = self.beeps.clone();
+        tokio::spawn(async move {
+            if let Err(e) = beeps.play_async(BeepType::RecordingStart).await {
+                eprintln!("Warning: Failed to play recording start beep: {e}");
+            }
+        });
 
         if let Err(e) = self.recorder.start_recording() {
             eprintln!("Failed to start recording: {e}");
             return Ok(1);
         }
+        eprintln!("Audio recording started successfully!");
 
         // Signals
         let mut signals = signals::build_signal_stream()?;

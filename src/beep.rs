@@ -45,6 +45,7 @@ impl Default for BeepConfig {
 }
 
 /// Audio feedback player for user notifications
+#[derive(Clone)]
 pub struct BeepPlayer {
     config: BeepConfig,
 }

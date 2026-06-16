@@ -138,7 +138,7 @@ impl TranscriptionFactory {
             }
             ProviderKind::Local => {
                 let model_path = crate::config::Config::model_path(&cfg.whisper_model);
-                let provider = local::LocalWhisperProvider::new(&model_path)?;
+                let provider = local::LocalWhisperProvider::new(&model_path, cfg)?;
                 Ok(Box::new(provider))
             }
             ProviderKind::Google => {
