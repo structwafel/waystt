@@ -96,26 +96,32 @@ async fn test_name() {
 - Example: `BEEP_VOLUME=0.0 cargo run -- --envfile .env`
 
 ### GPU Acceleration
-The project supports optional GPU acceleration for local whisper transcription via Vulkan (works on both AMD and NVIDIA GPUs).
+Local whisper transcription runs on the GPU via Vulkan (AMD and NVIDIA) **by default**.
 
 #### Build Options
-- **CPU only** (default): `cargo build --release`
-- **GPU support**: `cargo build --release --features vulkan`
+- **GPU (default)**: `cargo build --release` (or `cargo install --path . --force`)
+- **CPU only**: `cargo build --release --no-default-features`
 
 #### Configuration
 Set these environment variables in your `.env` file:
 ```bash
 TRANSCRIPTION_PROVIDER=local
-WHISPER_BACKEND=cpu     # Options: cpu, vulkan
-WHISPER_GPU_DEVICE=0    # GPU device ID (default: 0)
+# WHISPER_BACKEND defaults to vulkan when built with the vulkan feature, else cpu.
+# WHISPER_BACKEND=vulkan   # Options: cpu, vulkan
+WHISPER_GPU_DEVICE=0       # GPU device ID (default: 0)
 ```
 
-The `WHISPER_BACKEND` environment variable selects which backend to use at runtime:
+The `WHISPER_BACKEND` environment variable selects the backend at runtime:
+- `vulkan` - GPU via Vulkan (default for GPU builds)
 - `cpu` - CPU-only inference (works with any build)
-- `vulkan` - GPU via Vulkan (requires building with `--features vulkan`)
 
 #### Prerequisites
-Install Vulkan drivers and tools (`vulkan-devel`/`libvulkan-dev`, `vulkan-tools`)
+Install Vulkan drivers and tools (`vulkan-devel`/`libvulkan-dev`, `vulkan-tools`).
+
+#### Toolchain note
+whisper-rs 0.16 (bindgen 0.72) builds cleanly with modern clang (e.g. clang 22),
+so no `LIBCLANG_PATH` workaround is needed. (whisper-rs 0.15 / bindgen 0.71 did
+require pointing at an older libclang on bleeding-edge clang.)
 
 ## QA Testing Workflow
 

@@ -383,8 +383,10 @@ mkdir -p ~/.config/waystt
 cp .env.example ~/.config/waystt/.env
 # Edit ~/.config/waystt/.env with your API key
 
-# Build the project
+# Build the project (GPU/Vulkan enabled by default; needs Vulkan dev headers)
 cargo build --release
+# CPU-only build:
+# cargo build --release --no-default-features
 
 # Install to local bin
 mkdir -p ~/.local/bin

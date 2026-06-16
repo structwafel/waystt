@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- GPU acceleration for local Whisper transcription via Vulkan (AMD/NVIDIA)
-  - Build with `--features vulkan`; defaults to GPU when compiled with the feature
-  - Override with `WHISPER_BACKEND` (`cpu`/`vulkan`) and `WHISPER_GPU_DEVICE`
+- GPU acceleration for local Whisper transcription via Vulkan (AMD/NVIDIA), enabled by default
+  - CPU-only builds via `--no-default-features`
+  - Override the runtime backend with `WHISPER_BACKEND` (`cpu`/`vulkan`) and `WHISPER_GPU_DEVICE`
+
+### Dependencies
+- Bumped `whisper-rs` 0.15 → 0.16 (newer whisper.cpp; bindgen 0.72)
+  - Builds cleanly with modern clang (e.g. clang 22) — no `LIBCLANG_PATH` workaround needed
 
 ### Changed
 - Fast startup is now the default (~100ms instead of ~1600ms)

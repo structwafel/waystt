@@ -7,9 +7,9 @@ license = "GPL-3.0-or-later"
 authors = ["Artur Roszczyk <artur.roszczyk@gmail.com>"]
 
 [features]
-default = []
-# GPU acceleration (works on AMD and NVIDIA GPUs via Vulkan)
-# Release binaries include this feature for GPU support
+# GPU acceleration via Vulkan (AMD/NVIDIA) is enabled by default.
+# Build CPU-only with: cargo build --no-default-features
+default = ["vulkan"]
 vulkan = ["whisper-rs/vulkan"]
 
 [dependencies]
@@ -28,7 +28,7 @@ dirs = "5.0"
 cpal = "0.15"
 
 # Local transcription
-whisper-rs = "0.15"
+whisper-rs = "0.16"
 hound = "3.5"
 
 
